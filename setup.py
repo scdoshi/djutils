@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-VERSION = __import__('djutiils').__version__
+VERSION = __import__('djutils').__version__
 
 setup(
     name="djutils",
