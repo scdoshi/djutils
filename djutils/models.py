@@ -16,7 +16,7 @@ from django.utils.timezone import now
 ## Code
 ###############################################################################
 def usetz_now():
-    USE_TZ = settings.get('USE_TZ', False)
+    USE_TZ = getattr(settings, 'USE_TZ', False)
     if USE_TZ:
         return now()
     else:
