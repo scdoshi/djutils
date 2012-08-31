@@ -1,4 +1,4 @@
-VERSION = (0, 1, 0, 'f')  # following PEP 386
+VERSION = (0, 1, 1, 'f')  # following PEP 386
 # VERSION = (0, 5, 2, "a", "1")
 
 
