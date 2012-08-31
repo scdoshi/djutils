@@ -7,7 +7,20 @@ from datetime import datetime
 ###############################################################################
 ## Import Django
 ###############################################################################
+from django.conf import settings
 from django.db import models
+from django.utils.timezone import now
+
+
+###############################################################################
+## Code
+###############################################################################
+def usetz_now():
+    USE_TZ = settings.get('USE_TZ', False)
+    if USE_TZ:
+        return now()
+    else:
+        return datetime.utcnow()
 
 
 ###############################################################################
@@ -15,12 +28,12 @@ from django.db import models
 ###############################################################################
 class BaseModel(models.Model):
     """ This is an abstract base class for other classes. """
-    created = models.DateTimeField(default=datetime.utcnow, db_index=True)
-    updated = models.DateTimeField(default=datetime.utcnow, db_index=True)
+    created = models.DateTimeField(default=usetz_now, db_index=True)
+    updated = models.DateTimeField(default=usetz_now, db_index=True)
 
     class Meta:
         abstract = True
 
     def save(self, *args, **kwargs):
-        self.updated = datetime.utcnow()
-        super(ViaModel, self).save(*args, **kwargs)
+        self.updated = usetz_now()
+        super(BaseModel, self).save(*args, **kwargs)
