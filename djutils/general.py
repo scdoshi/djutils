@@ -2,8 +2,11 @@
 ## Import Django
 ###############################################################################
 from django.conf import settings
-from django.contrib.auth.models import SiteProfileNotAvailable
+from django.contrib.auth.models import Group, SiteProfileNotAvailable
+from django.core.cache import cache
 from django.db.models import get_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import _get_queryset
 
 
@@ -35,7 +38,6 @@ def get_profile_model():
     model, as defined by the ``AUTH_PROFILE_MODULE`` setting.
 
     :return: The model that is used as profile.
-
     """
     if (not hasattr(settings, 'AUTH_PROFILE_MODULE')) or \
            (not settings.AUTH_PROFILE_MODULE):
@@ -45,3 +47,20 @@ def get_profile_model():
     if profile_mod is None:
         raise SiteProfileNotAvailable
     return profile_mod
+
+
+def get_group(name):
+    """
+    Return group with given name, if it exists. Check cache first.
+    """
+    group = cache.get('djutils.general.group_%s' % name)
+    if not group:
+        group = Group.objects.get(name=name)
+        cache.set('djutils.general.group_%s' % name, group, 365 * 24 * 60 * 60)
+    return group
+
+
+@receiver(post_save, sender=Group,
+    dispatch_uid='djutils.general.group_post_save')
+def group_post_save(sender, instance, created, **kwargs):
+    cache.delete('djutils.general.group_%s' % instance.name)
