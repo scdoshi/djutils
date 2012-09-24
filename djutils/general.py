@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group, SiteProfileNotAvailable
 from django.core.cache import cache
 from django.db.models import get_model
-from django.db.models.signals import post_save
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.shortcuts import _get_queryset
 
@@ -60,7 +60,9 @@ def get_group(name):
     return group
 
 
+@receiver(post_delete, sender=Group,
+    dispatch_uid='djutils.general.group_post_delete')
 @receiver(post_save, sender=Group,
     dispatch_uid='djutils.general.group_post_save')
-def group_post_save(sender, instance, created, **kwargs):
+def group_post_save_delete(sender, instance, created, **kwargs):
     cache.delete('djutils.general.group_%s' % instance.name)
