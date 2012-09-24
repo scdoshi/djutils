@@ -1,25 +1,43 @@
+###############################################################################
+## Imports
+###############################################################################
+# Django
 from django import template
-from django.contrib.humanize.templatetags.humanize import intcomma
 from django.forms.forms import BoundField
 
+# User
+from djutils.currency import currency_format
+
+###############################################################################
+## Code
+###############################################################################
 register = template.Library()
 
-@register.filter(name='currency')
-def currency(dollars):
+
+###############################################################################
+## Filters
+###############################################################################
+@register.filter(name='currency2')
+def currency2(dollars):
     try:
         dollars = float(dollars)
     except ValueError:
         return dollars
-    
-    if dollars < 0.0:
-        dollars = -1.0 * dollars
-        return "- $%s%s" % (intcomma(int(dollars)), ("%0.2f" % dollars)[-3:])
-    return "$%s%s" % (intcomma(int(dollars)), ("%0.2f" % dollars)[-3:])
+
+    # Convert to cents (integer)
+    cents = int(dollars * 100)
+    return currency_format(cents)
+
+
+@register.filter(name='currency')
+def currency(cents):
+    return currency_format(cents)
+
 
 class NamelessField(BoundField):
     def __init__(self, field):
         self.__dict__ = field.__dict__
-        
+
     def as_widget(self, widget=None, attrs=None, only_initial=False):
         """
         Renders the field by rendering the passed widget, adding any HTML
@@ -39,7 +57,8 @@ class NamelessField(BoundField):
 
         name = ""
         return widget.render(name, self.value(), attrs=attrs)
-    
+
+
 @register.filter(name='namelessfield')
 def namelessfield(field):
     return NamelessField(field)
