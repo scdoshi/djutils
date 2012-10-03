@@ -10,7 +10,7 @@ from django.db import models
 # Extenal
 if 'south' in settings.INSTALLED_APPS:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^djutils\.fields\.CurrencyField"])
+    add_introspection_rules([], ["^djutils\.currency\.CurrencyField"])
 
 
 ###############################################################################
