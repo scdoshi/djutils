@@ -2,7 +2,7 @@
 ## Imports
 ###############################################################################
 # Django
-from djangi.forms.widgets import TextInput, DateInput, DateTimeInput, TimeInput
+from django.forms.widgets import TextInput, DateInput, DateTimeInput, TimeInput
 
 
 ###############################################################################
