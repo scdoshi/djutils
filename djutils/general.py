@@ -1,5 +1,10 @@
+"""
+General: General utilities for django.
+
+"""
+
 ###############################################################################
-## Import Django
+## Imports
 ###############################################################################
 from django.conf import settings
 from django.contrib.auth.models import Group, SiteProfileNotAvailable

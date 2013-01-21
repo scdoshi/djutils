@@ -1,5 +1,10 @@
+"""
+GIS: GIS related utilities.
+
+"""
+
 ###############################################################################
-## Import Python
+## Imports
 ###############################################################################
 import math
 
@@ -33,6 +38,7 @@ def TinyGPS2DegDec(lat, lng):
 
     return x, y
 
+
 ###############################################################################
 ## Functions to convert miles to change in lat, long (approx)
 ###############################################################################
@@ -60,7 +66,11 @@ def ChangeInLongitude(lat, miles):
 
 
 def CalculateBoundingBox(lng, lat, miles):
-    """"""
+    """
+    Given a latitude, longitude and a distance in miles, calculate
+    the co-ordinates of the bounding box 2*miles on long each side with the
+    given co-ordinates at the center.
+    """
 
     latChange = ChangeInLatitude(miles)
     latSouth = lat - latChange

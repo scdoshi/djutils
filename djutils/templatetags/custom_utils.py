@@ -8,6 +8,7 @@ from django.forms.forms import BoundField
 # User
 from djutils.currency import currency_format
 
+
 ###############################################################################
 ## Code
 ###############################################################################

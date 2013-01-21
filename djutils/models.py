@@ -1,12 +1,15 @@
+"""
+Models: utility Model classes based on `models.Model`
+
+"""
+
 ###############################################################################
-## Import Python
+## Imports
 ###############################################################################
+# Python
 from datetime import datetime
 
-
-###############################################################################
-## Import Django
-###############################################################################
+# Django
 from django.conf import settings
 from django.db import models
 from django.utils.timezone import now

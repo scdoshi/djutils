@@ -1,3 +1,12 @@
+"""
+Currency: This module is for currency related utilites.
+
+Module elements not in this file:
+1. `currency` and `currency2` filters: to use the format function in
+      templates. Located in djutils.templatetags.custom_utils
+
+"""
+
 ###############################################################################
 ## Imports
 ###############################################################################
