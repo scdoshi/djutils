@@ -50,6 +50,10 @@ def currency_format(cents):
         dollars = cents / 100
         cents = cents % 100
 
+    centstr = str(cents)
+    if len(centstr) < 2:
+        centstr = '0' + centstr
+
     if negative:
-        return "- $%s.%s" % (intcomma(dollars), str(cents))
-    return "$%s.%s" % (intcomma(dollars), str(cents))
+        return "- $%s.%s" % (intcomma(dollars), centstr)
+    return "$%s.%s" % (intcomma(dollars), centstr)
